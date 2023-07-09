@@ -31,7 +31,7 @@ def calculate_option_value(df):
 
 if __name__ == '__main__':
     chunksize = 1000
-    data_chunks = pd.read_csv('InputDataSet_CG.csv', chunksize=chunksize)
+    data_chunks = pd.read_csv('InputDataSetRaw.csv', chunksize=chunksize)
     start_time = time.time()
     log_file = 'execution.log'
     logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s',
