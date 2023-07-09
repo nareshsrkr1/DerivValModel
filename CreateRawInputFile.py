@@ -53,7 +53,7 @@ if __name__ == '__main__':
         result = [item for sublist in results for item in sublist]
 
         df = pd.DataFrame(result)
-        df.to_csv('file_name.csv', mode='w', index=False)
+        df.to_csv('InputDataSetRaw.csv', mode='w', index=False)
     except Exception as e:
         logging.error(f"An exception occurred: {str(e)}", exc_info=True)
     finally:
