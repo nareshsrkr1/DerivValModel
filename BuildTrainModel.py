@@ -11,13 +11,20 @@ import logging
 logging.basicConfig(level=logging.INFO, filename='model_training.log', filemode='w',
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
-
+# Spot_Price,Strike_Price,Maturity,risk_free_interest,Volatility,Call_Premium
 def load_dataset(filename):
     df = pd.read_csv(filename)
+    # df['risk_free_interest']=df['risk_free_interest']
+    # df['Volatility'] = df['Volatility']
+    # df['Maturity'] = df['Maturity']
+    # df['Spot_Price'] = df['Spot_Price'] / df['Strike_Price']
+    # df['Call_Premium'] = df['Call_Premium'] / df['Strike_Price']
+
     df['Volatility'] = df['Volatility'] / 100
     df['Maturity'] = df['Maturity'] / 365
     df['Spot Price'] = df['Spot Price'] / df['Strike Price']
     df['Call_Premium'] = df['Call_Premium'] / df['Strike Price']
+
     X = df.drop('Call_Premium', axis=1)
     Y = df['Call_Premium']
     return X, Y
@@ -72,6 +79,7 @@ def evaluate_model(model, X_test_scaled, Y_test):
         logging.error("An error occurred during model evaluation: %s", str(e))
 if __name__ == '__main__':
     logging.info("Loading dataset...")
+    # X, Y = load_dataset('InputDataSet_updated.csv')
     X, Y = load_dataset('InputDataSet_before.csv')
 
     logging.info("Splitting dataset into train and test...")
@@ -88,7 +96,7 @@ if __name__ == '__main__':
     model_history = train_model(model, X_train_scaled, Y_train, epochs=num_epochs)
 
     logging.info("Saving model and scaler...")
-    save_model(model, scaler, "option_pricing_model_savedmodel", "scaler.save")
+    save_model(model, scaler, "option_pricing_model_saved_model", "scaler_model.save")
 
     logging.info("Evaluating model...")
     evaluate_model(model, X_test_scaled, Y_test)
